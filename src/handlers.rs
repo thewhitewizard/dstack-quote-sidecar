@@ -70,7 +70,9 @@ pub async fn get_quote(
     match state.dstack_client.get_quote(data).await {
         Ok(quote) => match quote.replay_rtmrs() {
             Ok(rtmrs) => Json(json!({
-                "quote": format!("{:?}", quote),
+                "quote": quote.quote,
+                "event_log": quote.event_log,
+                "vm_config": quote.vm_config,
                 "rtmrs": format!("{:?}", rtmrs)
             })),
             Err(e) => Json(json!({
